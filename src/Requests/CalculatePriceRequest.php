@@ -6,7 +6,7 @@ use App\Validator as AppAssert;
 class CalculatePriceRequest
 {
 
-    #[AppAssert\ProductExists]
+    #[AppAssert\Product\TaxNumber]
     protected int $product;
 
     protected string $taxNumber;

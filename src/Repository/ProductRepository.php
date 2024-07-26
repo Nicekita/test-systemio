@@ -22,7 +22,6 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 }
