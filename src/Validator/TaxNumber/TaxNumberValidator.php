@@ -2,6 +2,7 @@
 
 namespace App\Validator\TaxNumber;
 
+use App\Repository\CountryRepository;
 use App\Repository\ProductRepository;
 use App\Validator\Product\TaxNumber;
 use Symfony\Component\Validator\Constraint;
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class TaxNumberValidator extends ConstraintValidator
 {
-    public function __construct(private readonly ProductRepository $productRepository){}
+    public function __construct(private readonly CountryRepository $countryRepository){}
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof TaxNumber) {
