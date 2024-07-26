@@ -11,3 +11,11 @@ services:
             - .:/app:rw
         environment:
             - APP_ENV=dev
+    postgres:
+        image: postgres:12
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: app
+            POSTGRES_DB: app
