@@ -14,15 +14,16 @@ class PaymentController extends AbstractController
 {
 
     #[Route('/calculate-price', name: 'calculate-price')]
-    public function calculatePrice(CalculatePriceRequest $request, CalculatePrice $action): JsonResponse
+    public function calculatePrice(CalculatePriceRequest $request, CalculatePrice $calculator): JsonResponse
     {
-        $price = $action->execute($request->product, $request->taxNumber, $request->couponCode);
+        $price = $calculator->getPrice($request->product, $request->taxNumber, $request->couponCode);
         return $this->json(['price' => $price]);
     }
     #[Route('/purchase', name: 'purchase')]
-    public function purchase(PurchaseRequest $request, PurchaseProduct $action): JsonResponse
+    public function purchase(PurchaseRequest $request, PurchaseProduct $action, CalculatePrice $calculator): JsonResponse
     {
-        $result = $action->execute($request->product, $request->taxNumber, $request->couponCode, $request->paymentProcessor);
+        $price = $calculator->getPrice($request->product, $request->taxNumber, $request->couponCode);
+        $result = $action->execute($price, $request->paymentProcessor);
         if (!$result) {
             return $this->json(['message' => 'Purchase failed'], 400);
         }

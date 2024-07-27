@@ -20,7 +20,7 @@ class CalculatePrice
     }
 
 
-    public function execute(int $productId, string $taxNumber, string $coupon): int
+    public function getPrice(int $productId, string $taxNumber, string $coupon): int
     {
         $productPrice = $this->productRepository->findById($productId)->getPrice();
 

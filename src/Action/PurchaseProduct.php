@@ -18,16 +18,14 @@ class PurchaseProduct
 
 
     public function __construct(
-        private CalculatePrice $priceCalculator,
         private ProcessorPicker $processorPicker
     )
     {
     }
 
 
-    public function execute(int $productId, string $taxNumber, string $coupon, string $payment): bool
+    public function execute(int $price, string $payment): bool
     {
-        $price = $this->priceCalculator->execute($productId, $taxNumber, $coupon);
         $paymentProcessor = $this->processorPicker->pickProcessor($payment);
         return $paymentProcessor->pay($price);
     }

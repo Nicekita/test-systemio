@@ -8,15 +8,15 @@ use Throwable;
 
 class Paypal implements PaymentProcessor
 {
-    public function __construct(private readonly PaypalPaymentProcessor $paymentProcessor)
+    public function __construct()
     {
     }
     public function pay(int $price): bool
     {
         try {
-            $this->paymentProcessor->pay($price);
+            (new PaypalPaymentProcessor())->pay($price);
         }
-        catch (Throwable $e) {
+        catch (Throwable) {
             return false;
         }
         return true;

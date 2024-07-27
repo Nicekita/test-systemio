@@ -7,12 +7,12 @@ use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
 
 class Stripe implements PaymentProcessor
 {
-    public function __construct(private readonly StripePaymentProcessor $paymentProcessor)
+    public function __construct()
     {
 
     }
     public function pay(int $price): bool
     {
-        return $this->paymentProcessor->processPayment($price);
+        return (new StripePaymentProcessor())->processPayment($price);
     }
 }
