@@ -9,16 +9,17 @@ Content-Type: application/json
   "couponCode": "D15"
 }
 
-### Calculate Price with invalid product
+### Calculate Price with invalid product and tax number
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
 
 {
 "product": 100,
-"taxNumber": "DE123456789",
+"taxNumber": "",
 "couponCode": "D15"
 }
+
 
 ### Execute Purchase
 POST http://127.0.0.1:8337/purchase

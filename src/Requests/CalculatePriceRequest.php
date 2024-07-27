@@ -2,20 +2,16 @@
 
 namespace App\Requests;
 use App\Validator as AppAssert;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CalculatePriceRequest
+class CalculatePriceRequest extends BaseRequest
 {
 
-    #[AppAssert\Product\TaxNumber]
-    protected int $product;
+    #[AppAssert\Product\ProductExists()]
+    #[NotBlank()]
+    public int $product;
+    #[NotBlank()]
+    public string $taxNumber;
 
-    protected string $taxNumber;
-    protected string $couponCode;
-
-    public function __construct(int $product, string $taxNumber, string $couponCode)
-    {
-        $this->product = $product;
-        $this->taxNumber = $taxNumber;
-        $this->couponCode = $couponCode;
-    }
+    public string $couponCode;
 }

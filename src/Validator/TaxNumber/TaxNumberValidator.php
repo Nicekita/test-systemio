@@ -2,6 +2,7 @@
 
 namespace App\Validator\TaxNumber;
 
+use App\Helpers\ParseTaxNumber;
 use App\Repository\CountryRepository;
 use App\Repository\ProductRepository;
 use App\Validator\Product\TaxNumber;
@@ -29,27 +30,32 @@ class TaxNumberValidator extends ConstraintValidator
 
         //Тут код сильно зависит от того, ограничен ли код страны двумя символами.
 
-        $countryCode = substr($value, 0, 2);
-        $taxNumber = substr($value, 2);
+        $taxNumber = new ParseTaxNumber($value);
+
+        $countryCode = $taxNumber->countryCode;
+        $taxNumber = $taxNumber->taxNumber;
 
         //Получаем из ещё не существующего репозитория страну по коду
         $country = $this->countryRepository->findByCode($countryCode);
 
 
         if (!$country) {
-            $this->context->buildViolation('Страны с кодом "{{ code }}" не существует или оплата не поддерживается.')
+            $this->context->buildViolation('Payment in country with code "{{ code }}" is not supported.')
                 ->setParameter('{{ code }}', $countryCode)
                 ->addViolation();
             return;
         }
 
+
         $symbolsCount = $country->getSymbols();
         $numbersCount = $country->getNumbers();
 
-        if (strlen($taxNumber) !== $symbolsCount + $numbersCount) {
-            //TODO: Проверить количество символов и цифр отдельно
 
-            $this->context->buildViolation('Неверное количество символов в номере')
+        if (strlen($taxNumber) !== $symbolsCount + $numbersCount) {
+            //TODO: Проверить количество символов и цифр отдельно?
+            // Надо уточнить, насколько сложная должна быть проверка
+
+            $this->context->buildViolation('Wrong tax number format.')
                 ->addViolation();
         }
 
