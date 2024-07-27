@@ -13,6 +13,5 @@ class ProductExists extends Constraint
     public function __construct(?string $mode = null, ?string $message = null, ?array $groups = null, $payload = null)
     {
         parent::__construct([], $groups, $payload);
-        //TODO: Передлать с товара на модель(entity/repository) как параметр. Поле тоже. Почистить от лишних параметров
     }
 }

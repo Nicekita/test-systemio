@@ -4,7 +4,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 1,
+  "product": 10,
   "taxNumber": "DE123456789",
   "couponCode": "D15"
 }

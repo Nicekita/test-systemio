@@ -20,15 +20,15 @@ class CalculatePrice
     }
 
 
-    public function execute(CalculatePriceRequest $request): int
+    public function execute(int $productId, string $taxNumber, string $coupon): int
     {
-        $productPrice = $this->productRepository->findById($request->product)->getPrice();
+        $productPrice = $this->productRepository->findById($productId)->getPrice();
 
-        $countryCode = (new ParseTaxNumber($request->taxNumber))->countryCode;
+        $countryCode = (new ParseTaxNumber($taxNumber))->countryCode;
 
         $countryTax = $this->countryRepository->findByCode($countryCode)->getTax();
 
-        $coupon = $this->couponRepository->findByCode($request->couponCode);
+        $coupon = $this->couponRepository->findByCode($coupon);
         $couponDiscount = $coupon ? $coupon->getDiscount() / 100 : 0;
 
 

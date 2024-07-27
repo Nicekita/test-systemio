@@ -11,17 +11,17 @@ use Doctrine\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
 
-    private const DATA = [
+    private const array DATA = [
         Product::class => [
             ['name' => 'Iphone', 'price' => 10000],
             ['name' => 'AirPods (fake)', 'price' => 2000],
             ['name' => 'Ihole', 'price' => 100],
         ],
         Country::class => [
-            ['code' => 'DE', 'tax' => 19],
-            ['code' => 'IT', 'tax' => 22],
-            ['code' => 'FR', 'tax' => 20],
-            ['code' => 'GR', 'tax' => 24],
+            ['code' => 'DE', 'tax' => 19, 'numbers' => 3, 'symbols' => 3],
+            ['code' => 'IT', 'tax' => 22, 'numbers' => 3, 'symbols' => 3],
+            ['code' => 'FR', 'tax' => 20, 'numbers' => 3, 'symbols' => 3],
+            ['code' => 'GR', 'tax' => 24 ,'numbers' => 3, 'symbols' => 3],
         ],
         Coupon::class => [
             ['code' => '123', 'discount' => 10],
