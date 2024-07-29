@@ -4,8 +4,6 @@ namespace App\Validator\TaxNumber;
 
 use App\Helpers\ParseTaxNumber;
 use App\Repository\CountryRepository;
-use App\Repository\ProductRepository;
-use App\Validator\Product\TaxNumber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -28,16 +26,12 @@ class TaxNumberValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, 'string');
         }
 
-        //Тут код сильно зависит от того, ограничен ли код страны двумя символами.
-
         $taxNumber = new ParseTaxNumber($value);
 
         $countryCode = $taxNumber->countryCode;
         $taxNumber = $taxNumber->taxNumber;
 
-        //Получаем из ещё не существующего репозитория страну по коду
         $country = $this->countryRepository->findByCode($countryCode);
-
 
         if (!$country) {
             $this->context->buildViolation('Payment in country with code "{{ code }}" is not supported.')
@@ -50,11 +44,9 @@ class TaxNumberValidator extends ConstraintValidator
         $symbolsCount = $country->getSymbols();
         $numbersCount = $country->getNumbers();
 
-
         if (strlen($taxNumber) !== $symbolsCount + $numbersCount) {
-            //TODO: Проверить количество символов и цифр отдельно?
-            // Надо уточнить, насколько сложная должна быть проверка
-
+            // Тут можно накинуть сотни вариантов валидации таксового номера, считать цифры + символы, проверять наличие символов и цифр, проверять наличие пробелов и т.д.
+            // Но в рамках задачи я ограничусь проверкой на длину
             $this->context->buildViolation('Wrong tax number format.')
                 ->addViolation();
         }

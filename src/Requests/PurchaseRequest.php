@@ -10,6 +10,7 @@ class PurchaseRequest extends BaseRequest
     #[Assert\NotBlank()]
     public int $product;
     #[Assert\NotBlank()]
+    #[CustomAssert\TaxNumber\TaxNumber()]
     public string $taxNumber;
 
     public string $couponCode;

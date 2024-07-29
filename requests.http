@@ -32,3 +32,27 @@ Content-Type: application/json
   "couponCode": "D15",
   "paymentProcessor": "paypal"
 }
+
+### Execute Purchase with invalid product and tax number
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 12,
+  "taxNumber": "IB12345678900",
+  "couponCode": "D15",
+  "paymentProcessor": "paypal"
+}
+
+### Execute Purchase with invalid payment processor
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 12,
+  "taxNumber": "IT12345678900",
+  "couponCode": "D15",
+  "paymentProcessor": "str1pe"
+}
