@@ -4,9 +4,20 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 10,
+  "product": 1,
   "taxNumber": "DE123456789",
-  "couponCode": "D15"
+  "couponCode": "D10"
+}
+
+### Calculate Price with invalid coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789",
+  "couponCode": "D1000"
 }
 
 ### Calculate Price with invalid product and tax number
@@ -15,7 +26,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-"product": 100,
+"product": 10,
 "taxNumber": "",
 "couponCode": "D15"
 }
@@ -27,19 +38,19 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 9,
+  "product": 1,
   "taxNumber": "IT12345678900",
-  "couponCode": "D15",
+  "couponCode": "D20",
   "paymentProcessor": "paypal"
 }
 
-### Execute Purchase with invalid product and tax number
+### Execute Purchase with invalid tax number
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 12,
+  "product": 1,
   "taxNumber": "IB12345678900",
   "couponCode": "D15",
   "paymentProcessor": "paypal"
@@ -51,8 +62,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 12,
-  "taxNumber": "IT12345678900",
+  "product": 1,
+  "taxNumber": "FRAB12345678900",
   "couponCode": "D15",
   "paymentProcessor": "str1pe"
 }

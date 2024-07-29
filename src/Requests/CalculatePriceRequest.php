@@ -8,9 +8,9 @@ class CalculatePriceRequest extends BaseRequest
 {
 
     #[CustomAssert\Product\ProductExists()]
-    #[NotBlank()]
+    #[NotBlank(null, 'Product is required.')]
     public int $product;
-    #[NotBlank()]
+    #[NotBlank(null, 'Tax number is required.')]
     #[CustomAssert\TaxNumber\TaxNumber()]
     public string $taxNumber;
 

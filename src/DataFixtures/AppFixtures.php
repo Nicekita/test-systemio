@@ -13,20 +13,20 @@ class AppFixtures extends Fixture
 
     private const array DATA = [
         Product::class => [
-            ['name' => 'Iphone', 'price' => 10000],
-            ['name' => 'AirPods (fake)', 'price' => 2000],
-            ['name' => 'Ihole', 'price' => 100],
+            ['id' => 1, 'name' => 'Iphone', 'price' => 10000],
+            ['id' => 2, 'name' => 'AirPods (fake)', 'price' => 2000],
+            ['id' => 3, 'name' => 'Ihole', 'price' => 100],
         ],
         Country::class => [
-            ['code' => 'DE', 'tax' => 19, 'numbers' => 3, 'symbols' => 3],
-            ['code' => 'IT', 'tax' => 22, 'numbers' => 3, 'symbols' => 3],
-            ['code' => 'FR', 'tax' => 20, 'numbers' => 3, 'symbols' => 3],
+            ['code' => 'DE', 'tax' => 19, 'numbers' => 9, 'symbols' => 0],
+            ['code' => 'IT', 'tax' => 22, 'numbers' => 11, 'symbols' => 0],
+            ['code' => 'FR', 'tax' => 20, 'numbers' => 11, 'symbols' => 2],
             ['code' => 'GR', 'tax' => 24 ,'numbers' => 3, 'symbols' => 3],
         ],
         Coupon::class => [
-            ['code' => '123', 'discount' => 10],
-            ['code' => '456', 'discount' => 20],
-            ['code' => '789', 'discount' => 30],
+            ['code' => 'D10', 'discount' => 10],
+            ['code' => 'D20', 'discount' => 20],
+            ['code' => 'P50', 'discount' => 50],
         ],
     ];
     public function load(ObjectManager $manager): void

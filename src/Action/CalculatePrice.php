@@ -6,7 +6,6 @@ use App\Helpers\ParseTaxNumber;
 use App\Repository\CountryRepository;
 use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
-use App\Requests\CalculatePriceRequest;
 
 class CalculatePrice
 {
