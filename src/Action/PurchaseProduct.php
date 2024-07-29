@@ -24,7 +24,7 @@ class PurchaseProduct
     }
 
 
-    public function execute(int $price, string $payment): bool
+    public function purchase(int $price, string $payment): bool
     {
         $paymentProcessor = $this->processorPicker->pickProcessor($payment);
         return $paymentProcessor->pay($price);

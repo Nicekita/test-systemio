@@ -31,6 +31,6 @@ class CalculatePrice
         $couponDiscount = $coupon ? $coupon->getDiscount() / 100 : 0;
 
 
-        return $productPrice * (1 - $couponDiscount) * (1 + $countryTax);
+        return $productPrice * (1 - $couponDiscount) * (1 + ($countryTax / 100));
     }
 }

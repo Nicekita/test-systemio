@@ -23,7 +23,7 @@ class PaymentController extends AbstractController
     public function purchase(PurchaseRequest $request, PurchaseProduct $action, CalculatePrice $calculator): JsonResponse
     {
         $price = $calculator->getPrice($request->product, $request->taxNumber, $request->couponCode);
-        $result = $action->execute($price, $request->paymentProcessor);
+        $result = $action->purchase($price, $request->paymentProcessor);
         if (!$result) {
             return $this->json(['message' => 'Purchase failed'], 400);
         }
