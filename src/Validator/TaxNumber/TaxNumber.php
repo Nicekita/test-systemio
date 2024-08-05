@@ -2,15 +2,8 @@
 
 namespace App\Validator\TaxNumber;
 
-use Symfony\Component\Validator\Constraint;
-
+use App\Validator\AttributeConstraint;
 #[\Attribute]
-class TaxNumber extends Constraint
+class TaxNumber extends AttributeConstraint
 {
-    public string $mode = 'strict';
-
-    public function __construct(?string $mode = null, ?string $message = null, ?array $groups = null, $payload = null)
-    {
-        parent::__construct([], $groups, $payload);
-    }
 }
