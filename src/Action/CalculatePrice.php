@@ -2,7 +2,7 @@
 
 namespace App\Action;
 
-use App\Helpers\ParseTaxNumber;
+use App\Helpers\TaxNumberParser;
 use App\Repository\CountryRepository;
 use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
@@ -13,7 +13,8 @@ class CalculatePrice
     public function __construct(
         private readonly ProductRepository     $productRepository,
         private readonly CountryRepository     $countryRepository,
-        private readonly CouponRepository      $couponRepository
+        private readonly CouponRepository      $couponRepository,
+        private readonly TaxNumberParser       $taxNumberParser
     )
     {
     }
@@ -23,7 +24,7 @@ class CalculatePrice
     {
         $productPrice = $this->productRepository->findOneBy(['id' => $productId])->getPrice();
 
-        $countryCode = (new ParseTaxNumber($taxNumber))->countryCode;
+        $countryCode = $this->taxNumberParser->getCountryCode($taxNumber);
 
         $countryTax = $this->countryRepository->findOneBy(['code' => $countryCode])->getTax();
 

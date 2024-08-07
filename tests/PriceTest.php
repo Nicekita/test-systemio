@@ -6,6 +6,7 @@ use App\Action\CalculatePrice;
 use App\Entity\Country;
 use App\Entity\Coupon;
 use App\Entity\Product;
+use App\Helpers\TaxNumberParser;
 use App\Repository\CountryRepository;
 use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
@@ -49,9 +50,15 @@ class PriceTest extends KernelTestCase
         $mockCouponRepository = $this->createMock(CouponRepository::class);
         $mockCouponRepository->method('findOneBy')->willReturn($mockCoupon);
 
+        $mockTaxParser = $this->createMock(TaxNumberParser::class);
+        $mockTaxParser->method('getCountryCode')->willReturn('DE');
+        $mockTaxParser->method('getTaxNumber')->willReturn('123456789');
+
+
         $container->set(ProductRepository::class, $mockProductRepository);
         $container->set(CountryRepository::class, $mockCountryRepository);
         $container->set(CouponRepository::class, $mockCouponRepository);
+        $container->set(TaxNumberParser::class, $mockTaxParser);
 
         $calculatePrice = $container->get(CalculatePrice::class);
 

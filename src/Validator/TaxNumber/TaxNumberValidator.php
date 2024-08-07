@@ -2,7 +2,7 @@
 
 namespace App\Validator\TaxNumber;
 
-use App\Helpers\ParseTaxNumber;
+use App\Helpers\TaxNumberParser;
 use App\Repository\CountryRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class TaxNumberValidator extends ConstraintValidator
 {
-    public function __construct(private readonly CountryRepository $countryRepository){}
+    public function __construct(private readonly CountryRepository $countryRepository, private TaxNumberParser $taxParser){}
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof TaxNumber) {
@@ -25,10 +25,8 @@ class TaxNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        $taxNumber = new ParseTaxNumber($value);
-
-        $countryCode = $taxNumber->countryCode;
-        $taxNumber = $taxNumber->taxNumber;
+        $countryCode = $this->taxParser->getCountryCode($value);
+        $taxNumber = $this->taxParser->getTaxNumber($value);
 
         $country = $this->countryRepository->findByCode($countryCode);
 
@@ -39,13 +37,18 @@ class TaxNumberValidator extends ConstraintValidator
             return;
         }
 
-
         $symbolsCount = $country->getSymbols();
         $numbersCount = $country->getNumbers();
 
-        if (strlen($taxNumber) !== $symbolsCount + $numbersCount) {
-            // Тут можно накинуть сотни вариантов валидации таксового номера, считать цифры + символы, проверять наличие символов и цифр, проверять наличие пробелов и т.д.
-            // Но в рамках задачи я ограничусь проверкой на длину
+        $symbols = substr($taxNumber, 0, $symbolsCount);
+        $numbers = substr($taxNumber, $symbolsCount);
+
+        $isSymbolsValid = preg_match('/[a-zA-Z]/', $symbols);
+        $isNumbersValid = preg_match('/[0-9]/', $numbers);
+        $isEnoughSymbols = strlen($symbols) === $symbolsCount;
+        $isEnoughNumbers = strlen($numbers) === $numbersCount;
+
+        if (!$isSymbolsValid || !$isNumbersValid || !$isEnoughSymbols || !$isEnoughNumbers) {
             $this->context->buildViolation('Wrong tax number format.')
                 ->addViolation();
         }
