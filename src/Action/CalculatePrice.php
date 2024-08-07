@@ -21,13 +21,13 @@ class CalculatePrice
 
     public function getPrice(int $productId, string $taxNumber, ?string $coupon): int
     {
-        $productPrice = $this->productRepository->findById($productId)->getPrice();
+        $productPrice = $this->productRepository->findOneBy(['id' => $productId])->getPrice();
 
         $countryCode = (new ParseTaxNumber($taxNumber))->countryCode;
 
-        $countryTax = $this->countryRepository->findByCode($countryCode)->getTax();
+        $countryTax = $this->countryRepository->findOneBy(['code' => $countryCode])->getTax();
 
-        $coupon = $this->couponRepository->findByCode($coupon);
+        $coupon = $this->couponRepository->findOneBy(['code' => $coupon]);
 
         if ($coupon) {
             $discount = $coupon->isFixed()
