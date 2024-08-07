@@ -8,7 +8,7 @@ class CalculatePriceRequest
 {
 
     public function __construct(
-        #[CustomAssert\Product\ProductExists()]
+        #[CustomAssert\Entity\EntityExists('App\Entity\Product', 'Product')]
         #[NotBlank(null, 'Product is required.')]
         public int $product,
 
@@ -16,7 +16,8 @@ class CalculatePriceRequest
         #[CustomAssert\TaxNumber\TaxNumber()]
         public string $taxNumber,
 
-        public string $couponCode,
+        #[CustomAssert\Entity\EntityExists('App\Entity\Coupon', 'Coupon', 'code')]
+        public ?string $couponCode,
     ) {
 
     }

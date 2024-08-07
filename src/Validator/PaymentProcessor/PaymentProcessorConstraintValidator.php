@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class PaymentProcessorValidator extends ConstraintValidator
+class PaymentProcessorConstraintValidator extends ConstraintValidator
 {
     public function __construct(private readonly ProcessorPicker $processorPicker){}
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!$constraint instanceof PaymentProcessor) {
-            throw new UnexpectedTypeException($constraint, PaymentProcessor::class);
+        if (!$constraint instanceof PaymentProcessorConstraint) {
+            throw new UnexpectedTypeException($constraint, PaymentProcessorConstraint::class);
         }
 
         if (null === $value || '' === $value) {

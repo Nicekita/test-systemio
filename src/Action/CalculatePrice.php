@@ -19,7 +19,7 @@ class CalculatePrice
     }
 
 
-    public function getPrice(int $productId, string $taxNumber, string $coupon): int
+    public function getPrice(int $productId, string $taxNumber, ?string $coupon): int
     {
         $productPrice = $this->productRepository->findById($productId)->getPrice();
 
@@ -28,9 +28,14 @@ class CalculatePrice
         $countryTax = $this->countryRepository->findByCode($countryCode)->getTax();
 
         $coupon = $this->couponRepository->findByCode($coupon);
-        $couponDiscount = $coupon ? $coupon->getDiscount() / 100 : 0;
 
+        if ($coupon) {
+            $discount = $coupon->isFixed()
+                ? $coupon->getDiscount()
+                : $productPrice * ($coupon->getDiscount() / 100);
+            $productPrice -= $discount;
+        }
 
-        return $productPrice * (1 - $couponDiscount) * (1 + ($countryTax / 100));
+        return $productPrice * (1 + ($countryTax / 100));
     }
 }

@@ -21,8 +21,8 @@ class PurchaseProduct
         private ProcessorPicker $processorPicker
     )
     {
-    }
 
+    }
 
     public function purchase(int $price, string $payment): bool
     {

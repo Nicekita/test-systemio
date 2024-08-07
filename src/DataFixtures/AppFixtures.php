@@ -24,9 +24,10 @@ class AppFixtures extends Fixture
             ['code' => 'GR', 'tax' => 24 ,'numbers' => 3, 'symbols' => 3],
         ],
         Coupon::class => [
-            ['code' => 'D10', 'discount' => 10],
-            ['code' => 'D20', 'discount' => 20],
-            ['code' => 'P50', 'discount' => 50],
+            ['code' => 'D10', 'discount' => 10, 'fixed' => false],
+            ['code' => 'D20', 'discount' => 20, 'fixed' => false],
+            ['code' => 'P50', 'discount' => 50, 'fixed' => false],
+            ['code' => 'FIX1000', 'discount' => 1000, 'fixed' => true],
         ],
     ];
     public function load(ObjectManager $manager): void

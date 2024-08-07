@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Requests;
-use App\Payment\ProcessorPicker;
 use App\Validator as CustomAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 class PurchaseRequest
 {
     public function __construct(
-        #[CustomAssert\Product\ProductExists]
+        #[CustomAssert\Entity\EntityExists('App\Entity\Product', 'Product')]
         #[Assert\NotBlank(null, 'Product is required.')]
         public int $product,
 
@@ -15,9 +14,10 @@ class PurchaseRequest
         #[CustomAssert\TaxNumber\TaxNumber]
         public string $taxNumber,
 
-        public string $couponCode,
+        #[CustomAssert\Entity\EntityExists('App\Entity\Coupon', 'Coupon', 'code')]
+        public ?string $couponCode,
 
-        #[CustomAssert\PaymentProcessor\PaymentProcessor]
+        #[CustomAssert\PaymentProcessor\PaymentProcessorConstraint]
         public string $paymentProcessor,
     )
     {

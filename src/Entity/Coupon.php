@@ -16,6 +16,9 @@ class Coupon
     #[ORM\Column]
     private ?int $discount = null;
 
+    #[ORM\Column]
+    private ?bool $is_fixed = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -41,6 +44,18 @@ class Coupon
     public function setDiscount(int $discount): static
     {
         $this->discount = $discount;
+
+        return $this;
+    }
+
+    public function isFixed(): ?bool
+    {
+        return $this->is_fixed;
+    }
+
+    public function setFixed(bool $is_fixed): static
+    {
+        $this->is_fixed = $is_fixed;
 
         return $this;
     }

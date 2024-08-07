@@ -6,7 +6,7 @@ Content-Type: application/json
 {
   "product": 1,
   "taxNumber": "DE123456789",
-  "couponCode": "D10"
+  "couponCode": "P50"
 }
 
 ### Calculate Price with invalid coupon
@@ -19,6 +19,17 @@ Content-Type: application/json
   "taxNumber": "DE123456789",
   "couponCode": "D1000"
 }
+
+### Calculate Price without coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "DE123456789"
+}
+
 
 ### Calculate Price with invalid product and tax number
 POST http://127.0.0.1:8337/calculate-price
