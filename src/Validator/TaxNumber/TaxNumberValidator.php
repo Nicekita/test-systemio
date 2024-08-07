@@ -7,7 +7,6 @@ use App\Repository\CountryRepository;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class TaxNumberValidator extends ConstraintValidator
 {
@@ -23,7 +22,7 @@ class TaxNumberValidator extends ConstraintValidator
         }
 
         if (!is_string($value)) {
-            throw new UnexpectedValueException($value, 'string');
+            throw new UnexpectedTypeException($value, 'string');
         }
 
         $taxNumber = new ParseTaxNumber($value);

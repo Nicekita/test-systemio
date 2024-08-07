@@ -22,7 +22,7 @@ class ProductExistsValidator extends ConstraintValidator
         }
 
         if (!is_int($value)) {
-            throw new UnexpectedValueException($value, 'string');
+            throw new UnexpectedTypeException($value, 'string');
         }
 
 

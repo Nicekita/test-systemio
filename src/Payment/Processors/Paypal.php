@@ -1,11 +1,13 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Payment\Processors;
 
 use App\Payment\PaymentProcessor;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 use Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor;
 use Throwable;
 
+#[AsTaggedItem(index: 'paypal')]
 class Paypal implements PaymentProcessor
 {
     public function __construct()
@@ -21,4 +23,5 @@ class Paypal implements PaymentProcessor
         }
         return true;
     }
+
 }

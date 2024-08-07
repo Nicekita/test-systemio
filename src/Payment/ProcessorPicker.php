@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Payment;
 
-use App\Payment\Processors\Paypal;
-use App\Payment\Processors\Stripe;
 use Exception;
+
 
 class ProcessorPicker
 {
 
-    public function __construct(private Paypal $paypal, private Stripe $stripe)
+    public function __construct(private iterable $processors
+    )
     {
     }
 
@@ -19,11 +20,19 @@ class ProcessorPicker
      */
     public function pickProcessor(string $processor): PaymentProcessor
     {
-        return match($processor) {
-            'paypal' => $this->paypal,
-            'stripe' => $this->stripe,
-            default => throw new Exception('This payment method is not implemented yet.')
-        };
+        $processors = $this->getProcessorArray();
+
+        return $processors[$processor] ?? throw new Exception('This payment method is not implemented yet.');
     }
 
+    public function getAvailableProcessors(): array
+    {
+        return array_keys($this->getProcessorArray());
+    }
+
+
+    private function getProcessorArray(): array
+    {
+        return $this->processors instanceof \Traversable ? iterator_to_array($this->processors) : [];
+    }
 }
