@@ -4,15 +4,20 @@ namespace App\Requests;
 use App\Validator as CustomAssert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CalculatePriceRequest extends BaseRequest
+class CalculatePriceRequest
 {
 
-    #[CustomAssert\Product\ProductExists()]
-    #[NotBlank(null, 'Product is required.')]
-    public int $product;
-    #[NotBlank(null, 'Tax number is required.')]
-    #[CustomAssert\TaxNumber\TaxNumber()]
-    public string $taxNumber;
+    public function __construct(
+        #[CustomAssert\Product\ProductExists()]
+        #[NotBlank(null, 'Product is required.')]
+        public int $product,
 
-    public string $couponCode;
+        #[NotBlank(null, 'Tax number is required.')]
+        #[CustomAssert\TaxNumber\TaxNumber()]
+        public string $taxNumber,
+
+        public string $couponCode,
+    ) {
+
+    }
 }
